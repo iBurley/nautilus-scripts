@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Check if ffmpeg is installed
+if ! command -v ffmpeg &> /dev/null; then
+    notify-send "ffmpeg is not installed. Please install it to use this script."
+    exit 1
+fi
+
+# Loop through all selected files
+for file in "$@"; do
+    # Get the directory and filename without extension
+    dir=$(dirname "$file")
+    filename=$(basename "$file")
+    name="${filename%.*}"
+
+    # Convert the file to MP4
+    if ffmpeg -i "$file" "$dir/$name.mp4"; then
+        echo "Converted $file to $dir/$name.mp4"
+    else
+        notify-send "Failed to convert $file to MP4"
+    fi
+done
+
+# Show completion message
+notify-send "Conversion complete!"
