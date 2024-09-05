@@ -1,29 +1,31 @@
 #!/usr/bin/env bash
 
-# Imgur API key
-IMGUR_API_KEY="YOUR_IMGUR_API_KEY"
+# Source API key from .env
+if [ -f ".env" ]; then
+  source ".env"
+else
+  notify-send "No .env file found. Please create one with your API key."
+  exit 1
+fi
 
 # Check if curl is installed
-if ! command -v curl &> /dev/null; then
-    notify-send "curl is not installed. Please install it to use this script."
-    exit 1
+if ! command -v curl &>/dev/null; then
+  notify-send "curl is not installed. Please install it to use this script."
+  exit 1
 fi
 
 # Loop through all selected files
 for file in "$@"; do
-    # Upload the file to Imgur
-    response=$(curl -s -H "Authorization: Client-ID $IMGUR_API_KEY" -F "image=@$file" https://api.imgur.com/3/image)
+  # Upload the file to Imgur
+  response=$(curl -s -H "Authorization: Client-ID $IMGUR_API_KEY" -F "image=@$file" https://api.imgur.com/3/image)
 
-    # Extract the link from the response
-    link=$(echo "$response" | grep -o '"link":"[^"]*' | cut -d'"' -f4)
+  # Extract the link from the response
+  link=$(echo "$response" | grep -o '"link":"[^"]*' | cut -d'"' -f4)
 
-    if [ -n "$link" ]; then
-        echo "Uploaded $file to $link"
-        xdg-open "$link"
-    else
-        notify-send "Failed to upload $file to Imgur"
-    fi
+  if [ -n "$link" ]; then
+    notify-send "Upload complete!"
+    xdg-open "$link"
+  else
+    notify-send "Failed to upload $file to Imgur"
+  fi
 done
-
-# Show completion message
-notify-send "Upload complete!"
