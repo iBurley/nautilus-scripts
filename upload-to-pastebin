@@ -20,23 +20,21 @@ for file in "$@"; do
   file_content=$(cat "$file")
 
   # Upload file to Pastebin
-  response=$(
-    curl -X POST -s \
+  response=$(curl -X POST -s \
     -d "api_dev_key=$PASTEBIN_API_KEY" \
     -d "api_option=paste" \
     --data-urlencode "api_paste_code=$file_content" \
     -d "api_paste_name=$(basename "$file")" \
     -d "api_paste_format=bash" \
-    https://pastebin.com/api/api_post.php
-  )
+    https://pastebin.com/api/api_post.php)
 
   # Check if upload was successful
   if [[ $response == http* ]]; then
     # Get the raw link
-    raw_link="${response/pastebin.com/pastebin.com\/raw}"
-    notify-send "Upload complete!"
-    xdg-open "$raw_link"
+      raw_link="${response/pastebin.com/pastebin.com\/raw}"
+      notify-send "Upload complete!"
+      xdg-open "$raw_link"
   else
-    notify-send "Failed to upload $file to Pastebin: $response"
+      notify-send "Failed to upload $file to Pastebin: $response"
   fi
 done
