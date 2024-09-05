@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Source API key from .env
-if [ -f ".env" ]; then
-  source ".env"
+if [ -f "$HOME/.local/share/nautilus/scripts/.env" ]; then
+  source "$HOME/.local/share/nautilus/scripts/.env"
 else
   notify-send "No .env file found. Please create one with your API key."
   exit 1
