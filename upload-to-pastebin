@@ -21,12 +21,12 @@ for file in "$@"; do
 
   # Upload file to Pastebin
   response=$(
-    curl -X POST -s
-    -d "api_dev_key=$PASTEBIN_API_KEY"
-    -d "api_option=paste"
-    --data-urlencode "api_paste_code=$file_content"
-    -d "api_paste_name=$(basename "$file")"
-    -d "api_paste_format=bash"
+    curl -X POST -s \
+    -d "api_dev_key=$PASTEBIN_API_KEY" \
+    -d "api_option=paste" \
+    --data-urlencode "api_paste_code=$file_content" \
+    -d "api_paste_name=$(basename "$file")" \
+    -d "api_paste_format=bash" \
     https://pastebin.com/api/api_post.php
   )
 
