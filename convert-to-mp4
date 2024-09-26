@@ -2,7 +2,7 @@
 
 # Check if ffmpeg is installed
 if ! command -v ffmpeg &>/dev/null; then
-  notify-send "ffmpeg is not installed. Please install it to use this script."
+  notify-send -a "File Operation" "ffmpeg is not installed. Please install it to use this script."
   exit 1
 fi
 
@@ -15,8 +15,8 @@ for file in "$@"; do
 
   # Convert the file to MP4
   if ffmpeg -i "$file" "$dir/$name.mp4"; then
-    notify-send "Conversion complete!"
+    notify-send -a "File Operation" "Conversion complete!"
   else
-    notify-send "Failed to convert $file to MP4"
+    notify-send -a "File Operation" "Failed to convert $file to MP4"
   fi
 done
