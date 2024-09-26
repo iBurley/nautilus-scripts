@@ -2,7 +2,7 @@
 
 # Check if ImageMagick is installed
 if ! command -v convert &>/dev/null; then
-  notify-send "ImageMagick is not installed. Please install it to use this script."
+  notify-send -a "File Operation" "ImageMagick is not installed. Please install it to use this script."
   exit 1
 fi
 
@@ -15,8 +15,8 @@ for file in "$@"; do
 
   # Convert the file to PNG
   if convert "$file" "$dir/$name.png"; then
-    notify-send "Conversion complete!"
+    notify-send -a "File Operation" "Conversion complete!"
   else
-    notify-send "Failed to convert $file to PNG"
+    notify-send -a "File Operation" "Failed to convert $file to PNG"
   fi
 done
