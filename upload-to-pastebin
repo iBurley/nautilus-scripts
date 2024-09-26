@@ -4,13 +4,13 @@
 if [ -f "$HOME/.local/share/nautilus/scripts/.env" ]; then
   source "$HOME/.local/share/nautilus/scripts/.env"
 else
-  notify-send "No .env file found. Please create one with your API key."
+  notify-send -a "File Operation" "No .env file found. Please create one with your API key."
   exit 1
 fi
 
 # Check if curl is installed
 if ! command -v curl &>/dev/null; then
-  notify-send "curl is not installed. Please install it to use this script."
+  notify-send -a "File Operation" "curl is not installed. Please install it to use this script."
   exit 1
 fi
 
@@ -32,9 +32,9 @@ for file in "$@"; do
   if [[ $response == http* ]]; then
     # Get the raw link
     raw_link="${response/pastebin.com/pastebin.com\/raw}"
-    notify-send "Upload complete!"
+    notify-send -a "File Operation" "Upload complete!"
     xdg-open "$raw_link"
   else
-    notify-send "Failed to upload $file to Pastebin: $response"
+    notify-send -a "File Operation" "Failed to upload $file to Pastebin: $response"
   fi
 done
