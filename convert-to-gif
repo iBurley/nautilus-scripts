@@ -2,7 +2,7 @@
 
 # Check if ffmpeg is installed
 if ! command -v ffmpeg &>/dev/null; then
-  notify-send "ffmpeg is not installed. Please install it to use this script."
+  notify-send -a "File Operation" "ffmpeg is not installed. Please install it to use this script."
   exit 1
 fi
 
@@ -20,8 +20,8 @@ for file in "$@"; do
   # Convert the video to GIF using the palette
   if ffmpeg -i "$file" -i "$palette" -filter_complex "fps=25,scale=800:-1:flags=lanczos[x];[x][1:v]paletteuse" "$dir/$name.gif"; then
     rm "$palette" # Clean up the palette file
-    notify-send "Conversion complete!"
+    notify-send -a "File Operation" "Conversion complete!"
   else
-    notify-send "Failed to convert $file to GIF"
+    notify-send -a "File Operation" "Failed to convert $file to GIF"
   fi
 done
