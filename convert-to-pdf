@@ -2,7 +2,7 @@
 
 # Check if LibreOffice is installed
 if ! command -v libreoffice &>/dev/null; then
-  notify-send "LibreOffice is not installed. Please install it to use this script."
+  notify-send -a "File Operation" "LibreOffice is not installed. Please install it to use this script."
   exit 1
 fi
 
@@ -15,8 +15,8 @@ for file in "$@"; do
 
   # Convert the file to PDF
   if libreoffice --headless --convert-to pdf "$file" --outdir "$dir"; then
-    notify-send "Conversion complete!"
+    notify-send -a "File Operation" "Conversion complete!"
   else
-    notify-send "Failed to convert $file to PDF"
+    notify-send -a "File Operation" "Failed to convert $file to PDF"
   fi
 done
