@@ -10,8 +10,6 @@ fi
 for file in "$@"; do
   # Get the directory and filename without extension
   dir=$(dirname "$file")
-  filename=$(basename "$file")
-  name="${filename%.*}"
 
   # Convert the file to PDF
   if libreoffice --headless --convert-to pdf "$file" --outdir "$dir"; then
